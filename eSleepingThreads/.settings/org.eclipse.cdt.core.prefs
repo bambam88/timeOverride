@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+environment/project/cdt.managedbuild.config.gnu.exe.debug.1834858556/LD_PRELOAD/delimiter=\:
+environment/project/cdt.managedbuild.config.gnu.exe.debug.1834858556/LD_PRELOAD/operation=append
+environment/project/cdt.managedbuild.config.gnu.exe.debug.1834858556/LD_PRELOAD/value=/home/jyanez/Projects/seTimeOverrideCpp/timeOverride.so
+environment/project/cdt.managedbuild.config.gnu.exe.debug.1834858556/append=true
+environment/project/cdt.managedbuild.config.gnu.exe.debug.1834858556/appendContributed=true
+environment/project/cdt.managedbuild.config.gnu.exe.release.1170617866/LD_PRELOAD/delimiter=\:
+environment/project/cdt.managedbuild.config.gnu.exe.release.1170617866/LD_PRELOAD/operation=append
+environment/project/cdt.managedbuild.config.gnu.exe.release.1170617866/LD_PRELOAD/value=/home/jyanez/Projects/seTimeOverrideCpp/timeOverride.so
+environment/project/cdt.managedbuild.config.gnu.exe.release.1170617866/append=true
+environment/project/cdt.managedbuild.config.gnu.exe.release.1170617866/appendContributed=true
