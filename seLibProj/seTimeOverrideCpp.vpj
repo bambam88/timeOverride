@@ -4,15 +4,16 @@
     VendorName="SlickEdit"
     TemplateName="GNU C/C++"
     WorkingDir="."
-    BuildSystem="automakefile"
-    BuildMakeFile="%rp%rn.mak">
+    BuildSystem=""
+    BuildMakeFile="">
     <Config
         Name="Debug"
         Type="gnuc"
         DebugCallbackName="gdb"
         Version="1"
         OutputFile="%bdseTimeOverrideCpp.so"
-        CompilerConfigName="Latest Version">
+        CompilerConfigName="Default Compiler"
+        Defines="">
         <Menu>
             <Target
                 Name="Compile"
@@ -23,7 +24,7 @@
                 OutputExts="*.o"
                 SaveOption="SaveCurrent"
                 RunFromDir="%rw">
-                <Exec CmdLine='g++ -c %xup  %defd -g -o "%bd%n%oe" %i "%f"'/>
+                <Exec CmdLine='g++ -c %xup %defd -g -ggdb -fPIC -o "%bd%n%oe" %i %f'/>
             </Target>
             <Target
                 Name="Link"
@@ -34,7 +35,7 @@
                 Deletable="0"
                 SaveOption="SaveCurrent"
                 RunFromDir="%rw">
-                <Exec CmdLine='g++ %xup -g -o "%o" %f %libs -shared -fPIC'/>
+                <Exec CmdLine='g++ %xup -g -ggdb -shared -fPIC -o "%o" %objs'/>
             </Target>
             <Target
                 Name="Build"
@@ -43,7 +44,7 @@
                 Deletable="0"
                 SaveOption="SaveWorkspaceFiles"
                 RunFromDir="%rw">
-                <Exec CmdLine='make -f "%rp%rn.mak" CFG=%b'/>
+                <Exec CmdLine=""/>
             </Target>
             <Target
                 Name="Rebuild"
@@ -52,7 +53,7 @@
                 Deletable="0"
                 SaveOption="SaveWorkspaceFiles"
                 RunFromDir="%rw">
-                <Exec CmdLine='make -f "%rp%rn.mak" rebuild CFG=%b'/>
+                <Exec CmdLine=""/>
             </Target>
             <Target
                 Name="Debug"
@@ -63,7 +64,7 @@
                 Deletable="0"
                 SaveOption="SaveNone"
                 RunFromDir="%rw">
-                <Exec CmdLine=""/>
+                <Exec CmdLine=' "%o"'/>
             </Target>
             <Target
                 Name="Execute"
@@ -74,7 +75,7 @@
                 Deletable="0"
                 SaveOption="SaveWorkspaceFiles"
                 RunFromDir="%rw">
-                <Exec CmdLine=""/>
+                <Exec CmdLine='"%o"'/>
             </Target>
             <Target
                 Name="dash"
@@ -130,6 +131,8 @@
                 Name="LinkerOutputType"
                 Value="SharedLibrary"/>
         </List>
+        <Includes/>
+        <Libs PreObjects="0"/>
     </Config>
     <Config
         Name="Release"
@@ -137,7 +140,8 @@
         DebugCallbackName="gdb"
         Version="1"
         OutputFile="%bdseTimeOverrideCpp.so"
-        CompilerConfigName="Latest Version">
+        CompilerConfigName="Default Compiler"
+        Defines="">
         <Menu>
             <Target
                 Name="Compile"
@@ -148,7 +152,7 @@
                 OutputExts="*.o"
                 SaveOption="SaveCurrent"
                 RunFromDir="%rw">
-                <Exec CmdLine='g++ -c %xup %defd -o "%bd%n%oe" %i "%f"'/>
+                <Exec CmdLine='g++ -c %xup %defd -fPIC -o "%bd%n%oe" %i %f'/>
             </Target>
             <Target
                 Name="Link"
@@ -159,7 +163,7 @@
                 Deletable="0"
                 SaveOption="SaveCurrent"
                 RunFromDir="%rw">
-                <Exec CmdLine='g++ %xup -o "%o" %f %libs -shared -fPIC'/>
+                <Exec CmdLine='g++ %xup -shared -fPIC -o "%o" %objs'/>
             </Target>
             <Target
                 Name="Build"
@@ -168,7 +172,7 @@
                 Deletable="0"
                 SaveOption="SaveWorkspaceFiles"
                 RunFromDir="%rw">
-                <Exec CmdLine='make -f "%rp%rn.mak" CFG=%b'/>
+                <Exec CmdLine=""/>
             </Target>
             <Target
                 Name="Rebuild"
@@ -177,7 +181,7 @@
                 Deletable="0"
                 SaveOption="SaveWorkspaceFiles"
                 RunFromDir="%rw">
-                <Exec CmdLine='make -f "%rp%rn.mak" rebuild CFG=%b'/>
+                <Exec CmdLine=""/>
             </Target>
             <Target
                 Name="Debug"
@@ -188,7 +192,7 @@
                 Deletable="0"
                 SaveOption="SaveNone"
                 RunFromDir="%rw">
-                <Exec CmdLine=""/>
+                <Exec CmdLine=' "%o"'/>
             </Target>
             <Target
                 Name="Execute"
@@ -199,7 +203,7 @@
                 Deletable="0"
                 SaveOption="SaveWorkspaceFiles"
                 RunFromDir="%rw">
-                <Exec CmdLine=""/>
+                <Exec CmdLine='"%o"'/>
             </Target>
             <Target
                 Name="dash"
@@ -255,19 +259,21 @@
                 Name="LinkerOutputType"
                 Value="SharedLibrary"/>
         </List>
+        <Includes/>
+        <Libs PreObjects="0"/>
     </Config>
     <Files>
         <Folder
             Name="Source Files"
             Filters="*.c;*.C;*.cc;*.cpp;*.cp;*.cxx;*.c++;*.prg;*.pas;*.dpr;*.asm;*.s;*.bas;*.java;*.cs;*.sc;*.scala;*.e;*.cob;*.html;*.rc;*.tcl;*.py;*.pl;*.d;*.m;*.mm;*.go;*.groovy;*.gsh"
             GUID="{98FF4A5C-556F-445B-9A14-A4CB1911D8FB}">
-            <F N="timeOverride.cpp"/>
+            <F N="../Library/timeOverride.cpp"/>
         </Folder>
         <Folder
             Name="Header Files"
             Filters="*.h;*.H;*.hh;*.hpp;*.hxx;*.h++;*.inc;*.sh;*.cpy;*.if"
             GUID="{232114F4-7F55-4709-A03E-52631737A213}">
-            <F N="timeOverride.h"/>
+            <F N="../Library/timeOverride.h"/>
         </Folder>
         <Folder
             Name="Resource Files"
@@ -282,7 +288,7 @@
             Filters=""
             GUID="{B92A851B-726F-45F7-B3B2-8B440E38AC73}">
             <F
-                N="seTimeOverrideCpp.mak"
+                N="../Library/Makefile"
                 Type="Makefile"/>
         </Folder>
     </Files>

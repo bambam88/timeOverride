@@ -36,22 +36,22 @@ COMPILE_F90=gfortran -c -g -o "$(OUTDIR)/$(*F).o" "$<"
 COMPILE_D=gdc -c -g -o "$(OUTDIR)/$(*F).o" "$<"
 
 # Pattern rules
-$(OUTDIR)/%.o : %.cpp
+$(OUTDIR)/%.o : ../Library/%.cpp
 	$(COMPILE)
 
-$(OUTDIR)/%.o : %.ada
+$(OUTDIR)/%.o : ../Library/%.ada
 	$(COMPILE_ADA)
 
-$(OUTDIR)/%.o : %.d
+$(OUTDIR)/%.o : ../Library/%.d
 	$(COMPILE_D)
 
-$(OUTDIR)/%.o : %.adb
+$(OUTDIR)/%.o : ../Library/%.adb
 	$(COMPILE_ADB)
 
-$(OUTDIR)/%.o : %.f90
+$(OUTDIR)/%.o : ../Library/%.f90
 	$(COMPILE_F90)
 
-$(OUTDIR)/%.o : %.f
+$(OUTDIR)/%.o : ../Library/%.f
 	$(COMPILE_F)
 
 # Build rules
@@ -97,22 +97,22 @@ COMPILE_F90=gfortran -O -g -o "$(OUTDIR)/$(*F).o" "$<"
 COMPILE_D=gdc -c -g -o "$(OUTDIR)/$(*F).o" "$<"
 
 # Pattern rules
-$(OUTDIR)/%.o : %.cpp
+$(OUTDIR)/%.o : ../Library/%.cpp
 	$(COMPILE)
 
-$(OUTDIR)/%.o : %.ada
+$(OUTDIR)/%.o : ../Library/%.ada
 	$(COMPILE_ADA)
 
-$(OUTDIR)/%.o : %.d
+$(OUTDIR)/%.o : ../Library/%.d
 	$(COMPILE_D)
 
-$(OUTDIR)/%.o : %.adb
+$(OUTDIR)/%.o : ../Library/%.adb
 	$(COMPILE_ADB)
 
-$(OUTDIR)/%.o : %.f90
+$(OUTDIR)/%.o : ../Library/%.f90
 	$(COMPILE_F90)
 
-$(OUTDIR)/%.o : %.f
+$(OUTDIR)/%.o : ../Library/%.f
 	$(COMPILE_F)
 
 # Build rules

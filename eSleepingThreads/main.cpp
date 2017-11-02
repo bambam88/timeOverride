@@ -1,10 +1,16 @@
-/*
- * main.cpp
- *
- *  Created on: Nov 2, 2017
- *      Author: jyanez
- */
+/**
+    WorldView
+    main.cpp
+    Purpose: Create simple threads that sleep for a user specified time
 
+    Arguments:
+    -c: number of threads to generate
+    -s: timeout it mS
+    -t: time between clock ticks
+
+    @author jyanez
+    @version 0.1 10/28/16
+*/
 
 #include <iostream>
 #include <unistd.h>
@@ -22,6 +28,18 @@
 #include <vector>
 
 
+#ifdef DEBUG
+
+#define dbgprint(x) cerr << #x << ": " << x << " in "  << __FILE__ << ":" << __LINE__ << endl
+#define dbgmsg(message) cerr << message " in "  << __FILE__ << ":" << __LINE__ << endl
+
+#else
+
+#define dbgprint(x)
+#define dbgmsg(message)
+
+#endif
+
 using namespace std;
 
 typedef struct timeval  TIME_VALUE, *pTIME_VALUE;
@@ -37,14 +55,18 @@ struct globalArgs_t {
 
 static const char *optString = ":c:s:t:v:h:?:";
 
-
-#define NUM_THREADS 50
-
 bool threadsAreRunning;
 
 
+/**
+    Generates a sleep timeout in nanoseconds
 
-int nsleep(long miliseconds)
+    @param milliseconds -- timeout in milliseconds
+    @return result from calling nanosleep
+
+*/
+
+int msleep(long miliseconds)
 {
    struct timespec req, rem;
 
@@ -62,14 +84,28 @@ int nsleep(long miliseconds)
    return nanosleep(&req , &rem);
 }
 
+/**
+    Calls msleep with.
 
+    @param *t Pointer to a user argument
+    @return none
+
+*/
 void *wait(void *t) {
 
-   nsleep(globalArgs.sleepTimeout);
+   msleep(globalArgs.sleepTimeout);
    pthread_exit(NULL);
 }
 
+/**
+    Generates a clock tick by calling settimeofDay.
+    Additionally, the function implements a simple
+    date/time clock. No support for leap years
 
+
+    @param timevalue to pass in to settimeofday
+    @return nothing really
+*/
 int tickClock(struct tm *timeVal) {
     int status = 0;
     static int sec = 0;         // 00:00:00 --- yikes
@@ -108,13 +144,19 @@ int tickClock(struct tm *timeVal) {
 
 
     if (status < 0) {
-        cout << "setenv() returned an error.\n";
+    	dbgmsg("setenv() returned an error");
 
     }
 
     return status;
 }
 
+/**
+    Thread that generates tick events
+
+    @param none
+    @return none
+*/
 void *timeTickEvents(void *){
     TIME_VALUE  now;
 
@@ -142,10 +184,11 @@ void *timeTickEvents(void *){
             savedError = errno;
 
             if (savedError == EPERM) {
-                cout <<"You must run this as root.\n";
+            	dbgmsg("You must run this as root.\n");
 
             } else {
-                cout << "settimeofday() returned an error (" << result << ")\n";
+            	dbgmsg("settimeofday() returned an error:"<<result);
+
 
             }
         }
@@ -158,45 +201,12 @@ void *timeTickEvents(void *){
         usleep(globalArgs.tickTime);
     } while (threadsAreRunning);
 
-    cout << "Tick generation has ended\n";
+    dbgmsg("Tick generation has ended");
 
     return &result;
 
 }
 
-
-void timer_handler (int signum)
-{
-
-     TIME_VALUE  now;
-
-    time_t new_time;
-    int result;
-    struct tm currentTime;
-
-
-         tickClock(&currentTime);
-
-        new_time = mktime(&currentTime);
-
-        now.tv_sec = new_time;
-        now.tv_usec = 0;
-
-        // set the new time
-//        cout << "Setting new time to " << new_time << endl;
-        result = settimeofday(&now, NULL);
-        if (result) {
-
-            if (result == EPERM) {
-                cout <<"You must run this as root.\n";
-
-            } else {
-                cout << "settimeofday() returned an error (" << result << ")\n";
-
-            }
-        }
-
-}
 
 
 

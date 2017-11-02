@@ -26,7 +26,7 @@ int nanosleep(const struct timespec *pRequested_time, struct timespec *pRem);
 
 //#define DEBUGGING
 
-#if defined(DEBUGGING)
+#if defined(DEBUG)
 #define debug_print(level,fmt, ...) \
         do { if (level & DEBUG_FLAGS_ENABLED) fprintf(stderr, "%s:%d:%s(): " fmt, __FILE__, \
                                 __LINE__, __func__, __VA_ARGS__); } while (0)
